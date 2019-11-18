@@ -1,3 +1,7 @@
+clc;
+clear;
+load("Resources/lab1-data/lab1_1.mat")
+
 
 % Splitting features into vectors
 height=lab1_1(:,1);
