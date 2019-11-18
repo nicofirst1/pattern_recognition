@@ -22,7 +22,25 @@ for i=1:10000
     HDs=[HDs,hd];
 end
 
+%% Set D
+% get two random person from the dataset
+ps1=ps(2).iriscode;
+ps2=ps(3).iriscode;
+HDd=[];
 
+for i=1:10000
+    % randomly select two rows
+    N=2; % no. of rows needed
+    c=randperm(size(S,1),N);
+
+    row_ps1=ps1(c(1),:);
+    row_ps2=ps2(c(2),:);
+
+    % estimate hamming distance
+    hd=pdist2(row_ps1,row_ps2,'hamming');
+    hd=hd/length(row_ps2);
+    HDd=[HDd,hd];
+end
 
 
 %% Functions
