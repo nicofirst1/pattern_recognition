@@ -29,12 +29,23 @@ Consider the 24x3 array in the file lab1_1.mat. Each row is a three-dimensional 
 ##### PART 1
 The Hamming distance (HD) of two binary iris codes is the number of positions (bits) in which the two codes (binary feature vectors) differ.
 
-a) Compute two sets S and D of 1000 normalized HD values each as follows:
-For set S: Choose randomly one of the files person[i].mat, i = 1,...,20. Choose randomly two rows in that file. Compute the HD of these two rows. Normalize the HD by dividing it by the length of the rows 30. (If you use a Matlab function that computes the normalized HD, you need not divide by 30.) Repeat this process 10000 times to obtain 10000 such normalized HD values.
-Hint 1: Use the function sprintf to generate the filename for a person. For example sprintf(’person%02d.mat’,3) gives ’person03.mat’.
-Hint 2: Create a string array containing the strings ’person01.mat’, ’person02.mat’ etc, using the function char, to be able to select from it the name of a random file and to load that file.
+Compute two sets S and D of 1000 normalized HD values each as follows:
 
-b) For set D: Choose randomly two different files person[i].mat and person[j].mat, i = 1,...,20; j = 1,...,20; i /= j. Choose randomly one row from each of these two files. Compute the HD of these two rows. Normalize the HD by dividing it by 30. Repeat this process 10000 times to obtain 10000 such normalized HD values.
+- For set __S__: 
+	1. Choose randomly one of the files person[i].mat, i = 1,...,20. 
+	2. Choose randomly two rows in that file. 
+	3. Compute the HD of these two rows. 
+	4. Normalize the HD by dividing it by the length of the rows (=30).
+	5. Repeat this process 10000 times to obtain 10000 such normalized HD values.
+
+
+- For set __D__: 
+
+	1. Choose randomly two different files person[i].mat and person[j].mat, i = 1,...,20; j = 1,...,20; i /= j. 
+	2. Choose randomly one row from each of these two files. 
+	3. Compute the HD of these two rows. 
+	4. Normalize the HD by dividing it by 30. 
+	5. Repeat this process 10000 times to obtain 10000 such normalized HD values.
 
 ##### PART 2
 The distribution associated with the set S is the class-conditional probability density function that we measure a given HD value for two iris codes of the same person. The distribution associated with the set D is the class-conditional probability density function that we measure a given HD value for two iris codes of two different persons.
