@@ -18,9 +18,10 @@ for i=1:10000
 
     % estimate hamming distance
     hd=pdist2(row1,row2,'hamming');
-    hd=hd/length(row1);
     HDs=[HDs,hd];
 end
+
+disp(HDs);
 
 %% Set D
 % get two random person from the dataset
@@ -38,9 +39,10 @@ for i=1:10000
 
     % estimate hamming distance
     hd=pdist2(row_ps1,row_ps2,'hamming');
-    hd=hd/length(row_ps2);
     HDd=[HDd,hd];
 end
+
+disp(HDd);
 
 
 %% Functions
