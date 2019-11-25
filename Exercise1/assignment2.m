@@ -76,17 +76,16 @@ mu = mean(HDd);
 sigma = std(HDd);
 
 %Set this value to the desired false acceptance rate
-given_false_acceptance_rate = 0.01;
+given_false_acceptance_rate = 0.0005;
 
-d = get_d(mu, sigma, given_false_acceptance_rate);
-false_acceptance_rate = normcdf(d, mu, sigma);
+d=norminv(given_false_acceptance_rate,mu,sigma);
+false_acceptance_rate = normcdf(d, mu, sigma)
 
 %% Plotting
 
-figure(1)
-plot_hist(HDs,HDd);
-%figure(2)
-%plot_hist_gauss(HDs,HDd);
+%figure(1)
+%plot_hist(HDs,HDd);
+
 
 %% Function Definitions%%%%%%%%%%%%%%%%%%
 
@@ -116,36 +115,7 @@ ylabel('PDF')
 end
 
 
-function plot_hist_gauss(S,D)
-hold on
-%histogram(S,'FaceColor','blue','BinWidth',0.03333);
-%histogram(D,'FaceColor','red','BinWidth',0.03333);
-
-
-histfit(S);
-histfit(D);
-
-xlabel('Hamming distance')
-ylabel('Frequency')
-
-
-end
-
 %find a value of d that gives the given false acceptance rate
-function d = get_d(mu, sigma, false_acceptance_rate)
-    d = mu;
-    far = normcdf(d, mu, sigma);
-    while far > false_acceptance_rate
-        if (far - false_acceptance_rate) > 0.05
-            d = d - 0.01;
-        elseif (far - false_acceptance_rate) > 0.005
-            d = d - 0.001;
-        else
-            d = d - 0.0001;
-        end
-        far = normcdf(d, mu, sigma);
-    end
-end
 
 function persons=load_person()
 % load all persons in the dataset in random order
