@@ -85,18 +85,32 @@ false_acceptance_rate = normcdf(d, mu, sigma);
 
 figure(1)
 plot_hist(HDs,HDd);
-figure(2)
-plot_hist_gauss(HDs,HDd);
+%figure(2)
+%plot_hist_gauss(HDs,HDd);
 
 %% Function Definitions%%%%%%%%%%%%%%%%%%
 
 function plot_hist(S,D)
-
-histogram(S,'FaceColor','blue','BinWidth',0.03333);
 hold on
-histogram(D,'FaceColor','red','BinWidth',0.03333);
+
+histogram(S,'Normalization','pdf','FaceColor','blue','BinWidth',0.03333);
+histogram(D,'Normalization','pdf','FaceColor','red','BinWidth',0.03333);
+
+x_values = 0:.01:1;
+
+
+pd=fitdist(S','Normal');
+y = pdf(pd,x_values);
+plot(x_values,y,'LineWidth',2,'Color','blue')
+
+
+pd=fitdist(D','Normal');
+y = pdf(pd,x_values);
+plot(x_values,y,'LineWidth',2,'Color','red')
+
+
 xlabel('Hamming distance')
-ylabel('Frequency')
+ylabel('PDF')
 
 
 end
