@@ -33,6 +33,7 @@ for i=1:10000
     r2 = 1 + mod((randi(19) + r1 - 1), 20); %ensures r1 != r2
     if r1 == r2
          disp("Error, r1 = r2");
+         continue;
     end
     
     % get two random person from the dataset
@@ -53,18 +54,68 @@ end
 
 %disp(HDd);
 
-%%%%%%%%%%%%%%%%%Part 2%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Printing
+meanS= mean(HDs)
+varS=var(HDs)
 
-mu = mean(HDd)
-sigma = std(HDd)
+meanD= mean(HDd)
+varD=var(HDd)
+
+%% Correct estimation 
+
+one=meanD*(1-meanD)/varD;
+two=meanD^2*(1-meanD^2)/varD;
+three=varD*(1-varD)/meanD;
+four=varD*(1-varD)/meanD^2;
+five=meanD*(1-meanD)/sqrt(varD);
+six=sqrt(varD)*(1-sqrt(varD))/meanD^2;
+seven=sqrt(varD)*(1-sqrt(varD))/meanD;
+eight=sqrt(varD)*(1-sqrt(varD))/varD;
+
+mu = mean(HDd);
+sigma = std(HDd);
 
 %Set this value to the desired false acceptance rate
-given_false_acceptance_rate = 0.01
+given_false_acceptance_rate = 0.01;
 
-d = get_d(mu, sigma, given_false_acceptance_rate)
-false_acceptance_rate = normcdf(d, mu, sigma)
+d = get_d(mu, sigma, given_false_acceptance_rate);
+false_acceptance_rate = normcdf(d, mu, sigma);
 
-%%%%%%%%%%%%%%%%%%Function Definitions%%%%%%%%%%%%%%%%%%
+%% Plotting
+
+figure(1)
+plot_hist(HDs,HDd);
+figure(2)
+plot_hist_gauss(HDs,HDd);
+
+%% Function Definitions%%%%%%%%%%%%%%%%%%
+
+function plot_hist(S,D)
+
+histogram(S,'FaceColor','blue','BinWidth',0.03333);
+hold on
+histogram(D,'FaceColor','red','BinWidth',0.03333);
+xlabel('Hamming distance')
+ylabel('Frequency')
+
+
+end
+
+
+function plot_hist_gauss(S,D)
+hold on
+%histogram(S,'FaceColor','blue','BinWidth',0.03333);
+%histogram(D,'FaceColor','red','BinWidth',0.03333);
+
+
+histfit(S);
+histfit(D);
+
+xlabel('Hamming distance')
+ylabel('Frequency')
+
+
+end
 
 %find a value of d that gives the given false acceptance rate
 function d = get_d(mu, sigma, false_acceptance_rate)
