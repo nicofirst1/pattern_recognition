@@ -94,6 +94,77 @@ false_rejection_rate=counter/size(HDs,2)
 
 %% Question 14
 test_person=load('/Users/giulia/Desktop/pr/Resources/lab1-data/testperson.mat').iriscode;
+% getting indices where bit is 2
+missing_idx=find(test_person==2);
+% dropping them from test person
+test_person(missing_idx)=[];
+
+% loading other persons
+[pss,names]=load_person();
+
+
+mean_ps_hd=[];
+% for evey p
+for idx=1:size(pss,1)
+    % get p 
+    ps=pss(idx).iriscode;
+    hds=[];
+    % for every row in p
+    for row=1:size(ps,1)
+           
+        % get row and drop
+        row_ps=ps(row,:);
+        row_ps(missing_idx)=[];
+        hd=pdist2(row_ps,test_person,'hamming');
+        hds=[hds, hd];      
+    end
+    mean_ps_hd=[mean_ps_hd,mean(hds)];   
+    
+end
+[min_val_test,min_idx]=min(mean_ps_hd)
+names(min_idx,:)
+min_val_test
+
+%% Question 15
+HDd_test=[];
+ps=load_person();
+
+for i=1:10000
+    r1 = randi(20);
+    r2 = 1 + mod((randi(19) + r1 - 1), 20); %ensures r1 != r2
+    if r1 == r2
+         disp("Error, r1 = r2");
+         continue;
+    end
+    
+    % get two random person from the dataset
+    ps1=ps(r1).iriscode;
+    ps2=ps(r2).iriscode;
+    
+    % randomly select two rows
+    c1=randi(size(ps1,1));
+    c2=randi(size(ps2,1));
+
+    row_ps1=ps1(c1,:);
+    row_ps2=ps2(c2,:);
+
+    row_ps1(missing_idx)=[];
+    row_ps2(missing_idx)=[];
+    % estimate hamming distance
+    hd=pdist2(row_ps1,row_ps2,'hamming');
+    HDd_test=[HDd_test,hd];
+end
+
+mu_test = mean(HDd_test);
+sigma_test = std(HDd_test);
+
+
+false_acceptance_rate_test = normcdf(0.05, mu_test, sigma_test);
+
+plot_hist([],HDd_test);
+
+
+%% Question 16
 
 
 %% Plotting
@@ -103,6 +174,7 @@ plot_hist(HDs,HDd);
 
 
 %% Function Definitions%%%%%%%%%%%%%%%%%%
+
 
 function plot_hist(S,D)
 hold on
@@ -132,9 +204,10 @@ end
 
 %find a value of d that gives the given false acceptance rate
 
-function persons=load_person()
+function [persons,names]=load_person()
 % load all persons in the dataset in random order
     persons=[];
+    names=[];
     files=dir("Resources/lab1-data");
     files=files(randperm(length(files)));
     for f = 1:length(files)
@@ -144,6 +217,7 @@ function persons=load_person()
                 path=strcat(files(f).folder,"/",filename);
                 p=load(path);
                 persons=[persons;p];
+                names=[names;filename];
             end
         end
     end
