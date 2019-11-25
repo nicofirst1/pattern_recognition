@@ -17,7 +17,7 @@ fprintf('##########################\n');
 corr_ha=cor_coef(height,age);
 fprintf('Correlation coefficent between height and age %f\n', corr_ha);
 figure(1);
-plot_coeff(height,age,"height","age")
+plot_coeff(age,height,"age","height")
 
 
 corr_hw=cor_coef(height,weight);
@@ -36,13 +36,13 @@ plot_coeff(age,weight,"age","weight")
 function plot_coeff(X,Y, namex, namey)
 corr=cor_coef(X,Y);
 
-scatter(X,Y,'filled');
+scatter(X,Y,'filled','r');
 
 tit=sprintf('Correlation coeff: %d',corr);
 
 title(tit);
-xlabel('Index') ;
-ylabel('Values') ;
+xlabel(namex) ;
+ylabel(namey) ;
 leg1=sprintf('X : %s,\nY : %s',namex,namey);
 
 legend({leg1},'Location','southwest');
