@@ -55,13 +55,13 @@ end
 %disp(HDd);
 
 %% Printing
-meanS= mean(HDs)
-varS=var(HDs)
+meanS= mean(HDs);
+varS=var(HDs);
 
-meanD= mean(HDd)
-varD=var(HDd)
+meanD= mean(HDd);
+varD=var(HDd);
 
-%% Correct estimation 
+%% Question 8
 
 one=meanD*(1-meanD)/varD;
 two=meanD^2*(1-meanD^2)/varD;
@@ -78,13 +78,28 @@ sigma = std(HDd);
 %Set this value to the desired false acceptance rate
 given_false_acceptance_rate = 0.0005;
 
-d=norminv(given_false_acceptance_rate,mu,sigma);
-false_acceptance_rate = normcdf(d, mu, sigma)
+d=norminv(given_false_acceptance_rate,mu,sigma)
+false_acceptance_rate = normcdf(d, mu, sigma);
+
+%% Question 12
+counter=0;
+for i=1:size(HDs,2)
+    
+    if HDs(i)>d
+       counter=counter+1;
+    end
+end
+
+false_rejection_rate=counter/size(HDs,2)
+
+%% Question 14
+test_person=load('/Users/giulia/Desktop/pr/Resources/lab1-data/testperson.mat').iriscode;
+
 
 %% Plotting
 
-%figure(1)
-%plot_hist(HDs,HDd);
+figure(1)
+plot_hist(HDs,HDd);
 
 
 %% Function Definitions%%%%%%%%%%%%%%%%%%
@@ -125,9 +140,11 @@ function persons=load_person()
     for f = 1:length(files)
         filename=files(f).name;
         if regexp(filename, 'person')
-            path=strcat(files(f).folder,"/",filename);
-            p=load(path);
-            persons=[persons;p];
+            if isempty(regexp(filename, 'test'))
+                path=strcat(files(f).folder,"/",filename);
+                p=load(path);
+                persons=[persons;p];
+            end
         end
     end
 end
