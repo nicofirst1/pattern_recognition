@@ -36,7 +36,7 @@ plot_coeff(age,weight,"age","weight")
 function plot_coeff(X,Y, namex, namey)
 corr=cor_coef(X,Y);
 
-scatter(X,Y,'filled','r');
+scatter(X,Y,'filled','green', 'Marker', 's');
 
 tit=sprintf('Correlation coeff: %d',corr);
 

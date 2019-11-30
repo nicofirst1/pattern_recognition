@@ -2,7 +2,7 @@ clc;
 clear;
 
 % load all persons
-ps=load_person();
+[ps,j]=load_person();
 
 %% Set S
 HDs=[];
@@ -54,6 +54,10 @@ end
 
 %disp(HDd);
 
+%% Plotting
+
+figure(9)
+plot_hist(HDs,HDd);
 %% Printing
 meanS= mean(HDs);
 varS=var(HDs);
@@ -79,7 +83,9 @@ sigma = std(HDd);
 given_false_acceptance_rate = 0.0005;
 
 d=norminv(given_false_acceptance_rate,mu,sigma)
-false_acceptance_rate = normcdf(d, mu, sigma);
+false_acceptance_rate = normcdf(0.1971, mu, sigma)
+
+
 
 %% Question 12
 counter=0;
@@ -159,18 +165,13 @@ mu_test = mean(HDd_test);
 sigma_test = std(HDd_test);
 
 
-false_acceptance_rate_test = normcdf(0.05, mu_test, sigma_test);
+false_acceptance_rate_test = normcdf(0.1977, mu_test, sigma_test)
 
+figure(1)
 plot_hist([],HDd_test);
 
 
-%% Question 16
 
-
-%% Plotting
-
-figure(1)
-plot_hist(HDs,HDd);
 
 
 %% Function Definitions%%%%%%%%%%%%%%%%%%
@@ -197,6 +198,7 @@ plot(x_values,y,'LineWidth',2,'Color','red')
 
 xlabel('Hamming distance')
 ylabel('PDF')
+title('Normal Distribution');
 
 
 end
