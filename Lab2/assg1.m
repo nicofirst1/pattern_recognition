@@ -18,14 +18,14 @@ end
 %% Questions 4 to 12
 if 0
     
-    cov_mat=cov(data)
+    cov_mat=cov(data)*4/5
 end
 
 %% Questions 14 to 16
 if 1
-       digits(6)
+    digits(6)
     mu=mean(data);
-    sigma=cov(data);
+    sigma=cov(data)*4/5;
     
     Xs=[5,5,6;3,5,7;4,6.5,1];
     

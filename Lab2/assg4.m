@@ -45,7 +45,7 @@ if 1
     ylabel("peoples" );
     
     mu=mean(scores)
-    stdev=std(scores)
+    variance=var(scores)
     
 end
 

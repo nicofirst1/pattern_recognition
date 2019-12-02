@@ -6,26 +6,26 @@ mu=[3,4];
 sigma=[1,0;0,2];
 
 %% Question 1
-if 1
+if 0
     
     % get the range
-    range=[-10:1:10];
+    range=[-10:0.1:10];
     
     % initialize grid for plotting [21,21]
     [x,y] = meshgrid(range,range);      
     % concat for having  [21,21,2]
     c=cat(3,x,y);
     % reshape for having  [441,2]
-    c=reshape(c,441,2);
+    c=reshape(c,size(range,2)^2,2);
     
     % get prob [441,1]
     z=mvnpdf(c,mu,sigma);
     
     % reshape to [21,21]
-    z=reshape(z,21,21);
+    z=reshape(z,size(range,2),size(range,2));
 
     mesh(x,y,z);
-    title("2D Gaussian");
+    title("Gaussian PDF");
     
 end
 
