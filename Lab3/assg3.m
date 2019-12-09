@@ -37,7 +37,7 @@ Prior3=1/3;
 
 
 
-%% Question 13 to 21
+%% Question 13 to 27
 
 denU=(PU1+PU2+PU3)/3;
 denV=(PV1+PV2+PV3)/3;
@@ -57,6 +57,17 @@ PostW2=PW2*Prior2/denW;
 PostW3=PW3*Prior3/denW;
 
 
+%% Question 28 to 33
+k_num=5;
+data=[data1;data2;data3];
+class_labels=zeros(30,1);
+class_labels(1:10,:)=1;
+class_labels(10:20,:)=2;
+class_labels(20:30,:)=3;
+
+ResU= KNN(u, k_num, data, class_labels);
+ResV= KNN(v, k_num, data, class_labels);
+ResW= KNN(w, k_num, data, class_labels);
 
 
 %% defining functions
