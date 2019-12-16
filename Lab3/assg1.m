@@ -40,7 +40,9 @@ if 1
     roc(data,'verbose',1);
     hold on;
     scatter(false_allarm,hits,'r','filled')
+    legend({'No predictive val','','','ROC','optimal point','data point'})
     
+    d=norminv(hits)-norminv(false_allarm);
 end
 
 

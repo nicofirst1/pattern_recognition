@@ -58,16 +58,20 @@ PostW3=PW3*Prior3/denW;
 
 
 %% Question 28 to 33
-k_num=5;
 data=[data1;data2;data3];
 class_labels=zeros(30,1);
 class_labels(1:10,:)=1;
 class_labels(10:20,:)=2;
 class_labels(20:30,:)=3;
 
-ResU= KNN(u, k_num, data, class_labels);
-ResV= KNN(v, k_num, data, class_labels);
-ResW= KNN(w, k_num, data, class_labels);
+ResU2= KNN(u, 1, data, class_labels)+1;
+ResV2= KNN(v, 1, data, class_labels)+1;
+ResW2= KNN(w, 1, data, class_labels)+1;
+
+
+ResU5= KNN(u, 5, data, class_labels)+1;
+ResV5= KNN(v, 5, data, class_labels)+1;
+ResW5= KNN(w, 5, data, class_labels)+1;
 
 
 %% defining functions
@@ -104,8 +108,7 @@ function p=p(x,xis,hn)
         tmp=tmp+phi(x,xis(i,:)',hn)/Vn;
         
     end
-    
-    p=tmp/size(xis,i);
+    p=tmp/size(xis,1);
     
 
 end
