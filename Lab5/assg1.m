@@ -20,7 +20,7 @@ neurons=[2,1];
 
 
 %% Question 1
-if 0
+if 1
 [wsA,wsB,err]=LQV(neurons,lr,data,epochs,labels);
 
 figure(1);
@@ -67,7 +67,7 @@ end
 
 
 %% Question 6
-if 1
+if 0
     figure(4)
 
     neurons=[1,1;1,2;2,1;2,2];
