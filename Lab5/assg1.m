@@ -36,7 +36,7 @@ legend("{Class A}","{Class B}","Prot. A","Prot. B")
 end
 
 %% Question 4
-if 0
+if 1
 [wsA,wsB,err]=LQV(neurons,lr,data,epochs,labels);
 figure(2);
 plot(err);
@@ -46,7 +46,7 @@ ylabel("error rate")
 end
 
 %% Question 5
-if 0
+if 1
     figure(3)
 
     neurons=[1,1;1,2;2,1;2,2];
@@ -67,7 +67,7 @@ end
 
 
 %% Question 6
-if 0
+if 1
     figure(4)
 
     neurons=[1,1;1,2;2,1;2,2];
@@ -131,19 +131,23 @@ function [wsA,wsB,err]=LQV(neurons,lr,data,epochs,labels)
 neurA=neurons(1);
 neurB=neurons(2);
 
-dataA=data(1:100,:);
-dataB=data(101:200,:);
+indices=randperm(length(labels));
+
+wsA=rand(neurA,size(data,2))+mean(data);
+wsB=rand(neurB,size(data,2))+mean(data);
 
 
-wsA=rand(neurA,size(dataA,2))+mean(dataA);
-wsB=rand(neurB,size(dataB,2))+mean(dataB);
+
+classes=[zeros(neurons(1),1);ones(neurons(2),1)];
+
 
 err=zeros(epochs,1);
 
 for idx=1:epochs
         
-    wsA=LQV_step(lr,dataA,wsA);
-    wsB=LQV_step(lr,dataB,wsB);
+    ws=LQV_step(lr,data,labels,[wsA;wsB],classes);
+    wsA=ws(1:neurA,:);
+    wsB=ws(neurA+1:end,:);
     
     res=test(wsA,wsB,labels,data);
     err(idx)=1-mean(res);
@@ -154,17 +158,21 @@ end
 
 end
 
-function ws=LQV_step(lr,data,ws)
+function ws=LQV_step(lr,data,labels,ws,classes)
 % perform a step
 
 for idx=1:size(data,1)
     
     x=data(idx,:);
+    l=labels(idx);
     
     dist=pdist2(x,ws,'squaredeuclidean');
     [name,winner]=min(dist);
-    ws(winner,:)=ws(winner,:)+lr*(x- ws(winner,:));
-    
-end
+    if l==classes(winner)
+        ws(winner,:)=ws(winner,:)+lr*(x- ws(winner,:));
+    else
+        ws(winner,:)=ws(winner,:)-lr*(x- ws(winner,:));
+    end
 
+end
 end

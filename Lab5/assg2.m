@@ -16,7 +16,7 @@ folds=10;
 
 
 %%  Question 1
-if 0
+if 1
 res=kfold(data,labels,folds);
 res=mean(res);
 end
@@ -134,19 +134,18 @@ function [wsA,wsB,err]=LQV(neurons,lr,data,epochs,labels)
 neurA=neurons(1);
 neurB=neurons(2);
 
-dataA=data(labels==0,:);
-dataB=data(labels==1,:);
 
-
-wsA=rand(neurA,size(dataA,2))+mean(dataA);
-wsB=rand(neurB,size(dataB,2))+mean(dataB);
+wsA=rand(neurA,size(data,2))+mean(data);
+wsB=rand(neurB,size(data,2))+mean(data);
+classes=[zeros(neurons(1),1);ones(neurons(2),1)];
 
 err=zeros(epochs,1);
 
 for idx=1:epochs
         
-    wsA=LQV_step(lr,dataA,wsA);
-    wsB=LQV_step(lr,dataB,wsB);
+    ws=LQV_step(lr,data,labels,[wsA;wsB],classes);
+    wsA=ws(1:neurA,:);
+    wsB=ws(neurA+1:end,:);
     
     res=test_lqv(wsA,wsB,labels,data);
     err(idx)=1-mean(res);
@@ -157,17 +156,21 @@ end
 
 end
 
-function ws=LQV_step(lr,data,ws)
+function ws=LQV_step(lr,data,labels,ws,classes)
 % perform a step
 
 for idx=1:size(data,1)
     
     x=data(idx,:);
+    l=labels(idx);
     
     dist=pdist2(x,ws,'squaredeuclidean');
     [name,winner]=min(dist);
-    ws(winner,:)=ws(winner,:)+lr*(x- ws(winner,:));
-    
-end
+    if l==classes(winner)
+        ws(winner,:)=ws(winner,:)+lr*(x- ws(winner,:));
+    else
+        ws(winner,:)=ws(winner,:)-lr*(x- ws(winner,:));
+    end
 
+end
 end
