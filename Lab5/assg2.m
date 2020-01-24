@@ -16,7 +16,7 @@ folds=10;
 
 
 %%  Question 1
-if 1
+if 0
 res=kfold(data,labels,folds);
 res=mean(res);
 end

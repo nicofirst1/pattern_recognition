@@ -20,7 +20,21 @@ neurons=[2,1];
 
 
 %% Question 1
-if 1
+if 0
+
+figure(1);
+scatter(matA(:,1),matA(:,2));
+hold on;
+scatter(matB(:,1),matB(:,2));
+title("S4171632\_S2843013");
+
+legend("{Class A}","{Class B}","Prot. A","Prot. B")
+
+end
+
+
+%% Question 1 bis
+if 0
 [wsA,wsB,err]=LQV(neurons,lr,data,epochs,labels);
 
 figure(1);
@@ -36,7 +50,7 @@ legend("{Class A}","{Class B}","Prot. A","Prot. B")
 end
 
 %% Question 4
-if 1
+if 0
 [wsA,wsB,err]=LQV(neurons,lr,data,epochs,labels);
 figure(2);
 plot(err);
@@ -46,7 +60,7 @@ ylabel("error rate")
 end
 
 %% Question 5
-if 1
+if 0
     figure(3)
 
     neurons=[1,1;1,2;2,1;2,2];

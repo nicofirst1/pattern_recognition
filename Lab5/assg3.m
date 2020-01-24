@@ -41,7 +41,7 @@ end
 
 
 %% Question 2
-if 0
+if 1
     [ws,err,lambdas]=LQV(neurons,lr,data,epochs,labels);
     dataA=data(1:100,:);
     dataB=data(101:200,:);
